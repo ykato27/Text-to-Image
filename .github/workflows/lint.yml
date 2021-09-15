@@ -1,0 +1,32 @@
+name: Lint                                                  # ワークフロー名。自由に決めてよい
+on:                                                         # ワークフローの実行タイミングを指定する
+  push:
+
+jobs:                                                       # ワークフローは1つ以上のジョブから成る。ジョブは`jobs`の下で定義される
+  run-lint:                                                 # このワークフローのジョブは、`run-lint`ひとつだけである。
+    name: Run lint                                          # `name`: ジョブ名
+    runs-on: ubuntu-20.04                                   # `runs-on`: 実行環境の指定
+    timeout-minutes: 5                                      # `timeout-minutes`: 指定した時間でジョブがタイムアウトする
+    steps:                                                  # ジョブはステップによって構成される。ステップは`steps`の下で定義される
+      - uses: actions/checkout@v2                           # ブランチにチェックアウトする
+
+      - name: Set up Python                                 # 最新版のPythonをセットアップする
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Install linters                               # linterをインストールする
+        run: |                                              # `run`の下にシェルコマンドで処理を記述する
+          pip install --upgrade pip
+          pip install black isort flake8 nbqa --quiet
+      - name: Run lint                                      # lintする
+        run: |                                              # `run`の下にシェルコマンドで処理を記述する
+          is_error=0
+          black . --check --diff || is_error=1                                   # Pythonファイルのlint
+          isort . --check-only --diff || is_error=1
+          flake8 . --show-source --statistics || is_error=1
+          
+          nbqa black . --check --diff --nbqa-diff || is_error=1                  # notebookファイルのlint
+          nbqa isort . --check-only --diff --nbqa-diff || is_error=1
+          nbqa flake8 . --show-source --statistics --nbqa-diff || is_error=1
+          exit "$is_error"
