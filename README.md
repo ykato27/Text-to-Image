@@ -1,6 +1,6 @@
-# python-template-repository
+# Text-to-Image
 
-本リポジトリはPython 環境のテンプレートリポジトリです。
+テキストからの画像生成するモデルのexample リポジトリです。
 
 ## リポジトリ構成
 
@@ -13,6 +13,15 @@
 ├── docs
 ├── models
 ├── notebooks
+│   ├── Aleph2Image_(Delta)_CLIP+DALL_E_decoder.ipynb
+│   ├── BigSleep
+│   │   ├── BigSleep.ipynb
+│   │   └── The_Big_Sleep_BigGANxCLIP.ipynb
+│   ├── DALL-E
+│   │   ├── Afiaka_DALL_E_Generation.ipynb
+│   │   ├── DALL_E.ipynb
+│   │   └── DALL_E_demo.ipynb
+│   └── Text2Image_CLIP.ipynb
 ├── pyproject.toml
 ├── requirements.txt
 ├── setup.cfg
@@ -33,13 +42,13 @@
 
 ## 環境構築
 
-- Dockderfileがあるホスト側のフォルダへ移動（例：Desktop/python-template-repository）
+- Dockderfileがあるホスト側のフォルダへ移動（例：Desktop/Text-to-Image）
 
 ```
-cd Desktop/python-template-repository
+cd Desktop/Text-to-Image
 ```
 
-- Dockerによる環境構築（フォルダをマウント：Desktop/python-template-repository）
+- Dockerによる環境構築（フォルダをマウント：Desktop/Text-to-Image）
 
 ```
 docker-compose up --build
